@@ -13,7 +13,10 @@ class Generator:
     def _get_next_note(self, current_note=None):
         if not current_note or current_note not in self.markov_chain:
             random_chain = random.choice(self.markov_chain.values())
-            return random.choice(random_chain.keys())
+            random_note = random.choice(random_chain.keys())
+            while random_note == "sum":
+                random_note = random.choice(random_chain.keys())
+            return random_note
         next_note_counter = random.randint(
             0, self.markov_chain[current_note]["sum"])
         for note, frequency in self.markov_chain[
@@ -23,8 +26,7 @@ class Generator:
                 if next_note_counter <= 0:
                     return note
 
-    def _parse_note(self, serialized_note):
-        print serialized_note
+    def _note_to_message(self, serialized_note):
         parts = serialized_note.split("_")
         return mido.Message('note_on', note=int(parts[0]), velocity=127,
                             time=int(parts[1]))
@@ -32,9 +34,11 @@ class Generator:
     def generate(self, filename):
         with mido.midifiles.MidiFile() as midi:
             track = mido.MidiTrack()
+            last_note = None
             for i in range(100):
-                print self._get_next_note()
-                track.append(self._parse_note(self._get_next_note()))
+                new_serialized_note = self._get_next_note(last_note)
+                last_note = int(new_serialized_note.split("_")[0])
+                track.append(self._note_to_message(new_serialized_note))
             midi.tracks.append(track)
             midi.save(filename)
 

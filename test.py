@@ -22,10 +22,11 @@ with mido.midifiles.MidiFile() as midi:
         track.append(mido.Message('note_on', note=note,
                                   velocity=velocity,
                                   time=time))
+
     add(72, 100, 0)
     add(64, 100, 0)
     add(62, 100, 500)
-    add(62, 0, 1000)
+    add(62, 0, 2000)
     add(60, 100, 1000)
     add(62, 100, 1000)
     add(64, 100, 1000)

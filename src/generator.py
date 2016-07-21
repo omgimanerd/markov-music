@@ -45,5 +45,6 @@ class Generator:
 if __name__ == "__main__":
     from serializer import Serializer
     chain = Serializer("midi/river_flows.mid").get_markov_chain()
-
+    print "Generated markov chain"
+    print chain
     Generator(chain).generate("out.mid")

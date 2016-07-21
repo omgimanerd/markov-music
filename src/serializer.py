@@ -36,7 +36,7 @@ class Serializer:
         previous_chunk = []
         current_chunk = []
         for i, track in enumerate(midi.tracks):
-            for message in track[:15]:
+            for message in track:
                 if message.type == "set_tempo":
                     self.tempo = message.tempo
                 elif message.type == "note_on":

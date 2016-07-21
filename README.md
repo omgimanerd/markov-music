@@ -1,6 +1,7 @@
 # markov-music
 
-This repository contains Markov chain code that analyzes MIDI tracks and shit
+This repository contains code that analyzes MIDI tracks and generates a markov
+chain based on the note sequences in the MIDI.
 
 
 ## Contributors

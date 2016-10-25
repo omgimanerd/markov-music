@@ -23,7 +23,7 @@ The notes are numbers from 0-127 where 60 is middle C (MIDI standard).
 ## Contributing
 Fork this repository and clone it to your own computer. Send me a pull request
 with interesting thoughts, ideas, or suggestions.
-Please follow the [PEP8](http://pep8.org) standard if you are Contributing
+Please follow the [PEP8](http://pep8.org) standard if you are contributing
 to the codebase. Avoid pushing large midi files if possible.
 
 ## Contributors

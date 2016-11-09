@@ -10,9 +10,9 @@ track1 = None
 track2 = None
 
 for i, track in enumerate(mid.tracks):
-    print 'Track {}: {}'.format(i, track.name)
+    print('Track {}: {}'.format(i, track.name))
     for message in track[:75]:
-        print message
+        print(message)
 
 
 with mido.midifiles.MidiFile() as midi:

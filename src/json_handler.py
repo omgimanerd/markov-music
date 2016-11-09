@@ -6,22 +6,20 @@ import json
 class JSONHandler:
 
     @staticmethod
-    def markov_to_json(markov_chain):
-        return json.dumps({
-            "version": 1,
-            "type": "markov_chain",
-            "data": markov_chain
-        }, sort_keys=True, indent=4)
+    def markov_to_json(markov_chain, filename):
+        with open(filename, 'w') as f:
+            return json.dump(f, {
+                'version': 1,
+                'type': 'markov_chain',
+                'name': filename,
+                'data': markov_chain
+            })
 
     @staticmethod
-    def merge_markov_chains(chain1, chain2):
-        for key, value in chain2.iteritems():
-            if key in chain1:
-                chain1[key] = value
-            else:
-                chain1[key].update(value)
-        return chain1
+    def json_to_markov(filename):
+        with open(filename) as f:
+            return json.load(f)
 
-if __name__ == "__main__":
-    from serializer import Serializer
-    print Serializer("river_flows.mid").get_markov_chain()
+if __name__ == '__main__':
+    from parser import Parser
+    print(Parser('river_flows.mid').get_chain())

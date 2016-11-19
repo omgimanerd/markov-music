@@ -1,40 +1,54 @@
 #!/usr/bin/python
-# This class handles the storage and manipulation of a markov chain.
+# This class handles the storage and manipulation of a markov chain of notes.
 
-from collections import defaultdict
+from collections import Counter, defaultdict, namedtuple
 
-import copy
+import random
+
+Note = namedtuple('Note', ['note', 'duration'])
 
 class MarkovChain:
 
     def __init__(self):
-        self.chain = defaultdict(lambda: defaultdict(int))
+        self.chain = defaultdict(Counter)
+        self.sums = defaultdict(int)
 
     @staticmethod
     def create_from_dict(dict):
         m = MarkovChain()
+        # bugged!
         for from_note, to_notes in dict.items():
             for k, v in to_notes.items():
                 m.add(from_note, k, v)
         return m
 
     def _serialize(self, note, duration):
-        return '{}_{}'.format(note, duration)
+        return Note(note, duration)
 
     def __str__(self):
         return str(self.get_chain())
 
     def add(self, from_note, to_note, duration):
         self.chain[from_note][self._serialize(to_note, duration)] += 1
+        self.sums[from_note] += 1
+
+    def get_next(self, seed_note):
+        if seed_note is None or seed_note not in self.chain:
+            random_chain = self.chain[random.choice(list(self.chain.keys()))]
+            return random.choice(self.chain.most_common())
+        next_note_counter = random.randint(0, self.sums[seed_note])
+        for note, frequency in self.chain[seed_note].items():
+            next_note_counter -= frequency
+            if next_note_counter <= 0:
+                return note
 
     def merge(self, other):
         assert isinstance(other, MarkovChain)
-        out = MarkovChain()
-        for chain in [self.chain, other.chain]:
-            for from_note, to_notes in chain.items():
-                for k, v in to_notes.items():
-                    out.chain[from_note][k] += v
-        return out
+        self.sums = defaultdict(int)
+        for from_note, to_notes in other.chain.items():
+            self.chain[from_note].update(to_notes)
+        for from_note, to_notes in self.chain.items():
+            self.sums[from_note] = sum(self.chain[from_note].values())
 
     def get_chain(self):
         return {k: dict(v) for k, v in self.chain.items()}
@@ -50,4 +64,6 @@ if __name__ == '__main__':
         n = MarkovChain()
         n.add(10, 13, 100)
         n.add(12, 14, 200)
-        print(m.merge(n))
+        m.merge(n)
+        print(m)
+        print(m.sums)

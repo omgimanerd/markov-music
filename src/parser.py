@@ -77,7 +77,7 @@ class Parser:
                 "Could not read a tempo and ticks_per_beat from midi")
 
     def get_chain(self):
-        return self.markov_chain.get_chain()
+        return self.markov_chain
 
 if __name__ == "__main__":
     import sys

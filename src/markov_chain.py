@@ -35,7 +35,7 @@ class MarkovChain:
     def get_next(self, seed_note):
         if seed_note is None or seed_note not in self.chain:
             random_chain = self.chain[random.choice(list(self.chain.keys()))]
-            return random.choice(self.chain.most_common())
+            return random.choice(list(random_chain.keys()))
         next_note_counter = random.randint(0, self.sums[seed_note])
         for note, frequency in self.chain[seed_note].items():
             next_note_counter -= frequency

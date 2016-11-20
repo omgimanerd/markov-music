@@ -19,7 +19,8 @@ class Generator:
 
     def _note_to_messages(self, note):
         return [
-            mido.Message('note_on', note=note.note, velocity=127, time=0)
+            mido.Message('note_on', note=note.note, velocity=127,
+                         time=0),
             mido.Message('note_off', note=note.note, velocity=0,
                          time=note.duration)
         ]

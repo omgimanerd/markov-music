@@ -38,6 +38,7 @@ class Generator:
 if __name__ == "__main__":
     import sys
     if len(sys.argv) == 3:
+        # python generator.py in.mid out.mid
         from parser import Parser
         chain = Parser(sys.argv[1]).get_chain()
         print("Generated markov chain")

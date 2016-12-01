@@ -53,6 +53,23 @@ class MarkovChain:
     def get_chain(self):
         return {k: dict(v) for k, v in self.chain.items()}
 
+    def print_as_matrix(self, limit=10):
+        columns = []
+        for from_note, to_notes in self.chain.items():
+            for note in to_notes:
+                if note not in columns:
+                    columns.append(note)
+        _col = lambda string: '{:<8}'.format(string)
+        _note = lambda note: '{}:{}'.format(note.note, note.duration)
+        out = _col('')
+        out += ''.join([_col(_note(note)) for note in columns[:limit]]) + '\n'
+        for from_note, to_notes in self.chain.items():
+            out += _col(from_note)
+            for note in columns[:limit]:
+                out += _col(to_notes[note])
+            out += '\n'
+        print(out)
+
 if __name__ == '__main__':
     import sys
     if len(sys.argv) == 2 and sys.argv[1] == 'test':
@@ -66,4 +83,4 @@ if __name__ == '__main__':
         n.add(12, 14, 200)
         m.merge(n)
         print(m)
-        print(m.sums)
+        m.print_as_matrix()

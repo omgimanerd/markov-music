@@ -4,6 +4,7 @@
 
 import hashlib
 import mido
+import argparse
 
 from markov_chain import MarkovChain
 
@@ -80,7 +81,8 @@ class Parser:
         return self.markov_chain
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) == 2:
-        print(Parser(sys.argv[1], verbose=False).get_chain())
-        print('No issues parsing {}'.format(sys.argv[1]))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_file", help="The midi file input")
+    args = parser.parse_args()
+    print(Parser(args.input_file, verbose=False).get_chain())
+    print('No issues parsing {}'.format(args.input_file))

@@ -22,4 +22,4 @@ class JSONHandler:
 
 if __name__ == '__main__':
     from parser import Parser
-    print(Parser('river_flows.mid').get_chain())
+    print(Parser('midi/river_flows.mid').get_chain())

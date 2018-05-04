@@ -41,5 +41,5 @@ if __name__ == "__main__":
         # python generator.py in.mid out.mid
         from parser import Parser
         chain = Parser(sys.argv[1]).get_chain()
-        print("Generated markov chain")
         Generator.load(chain).generate(sys.argv[2])
+        print("Generated markov chain")

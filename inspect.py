@@ -13,3 +13,5 @@ if __name__ == '__main__':
     import sys
     if len(sys.argv) == 2:
         inspect(sys.argv[1])
+    else:
+        print('Usage: python inspect.py <input.midi>')

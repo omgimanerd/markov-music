@@ -29,6 +29,7 @@ class Generator:
         with mido.midifiles.MidiFile() as midi:
             track = mido.MidiTrack()
             last_note = None
+            # Generate a sequence of 100 notes
             for i in range(100):
                 new_note = self.markov_chain.get_next(last_note)
                 track.extend(self._note_to_messages(new_note))
@@ -38,8 +39,12 @@ class Generator:
 if __name__ == "__main__":
     import sys
     if len(sys.argv) == 3:
-        # python generator.py in.mid out.mid
+        # Example usage:
+        # python generator.py <in.mid> <out.mid>
         from parser import Parser
         chain = Parser(sys.argv[1]).get_chain()
         Generator.load(chain).generate(sys.argv[2])
-        print("Generated markov chain")
+        print('Generated markov chain')
+    else:
+        print('Invalid number of arguments:')
+        print('Example usage: python generator.py <in.mid> <out.mid>')
